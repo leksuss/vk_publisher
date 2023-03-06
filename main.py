@@ -15,7 +15,7 @@ def main():
     env = Env()
     env.read_env()
 
-    group_id = env.str('VK_GROUP_ID')
+    group_id = env.int('VK_GROUP_ID')
     api_key = env.str('VK_API_KEY')
 
     pathlib.Path(DOWNLOAD_FOLDER).mkdir(exist_ok=True)
