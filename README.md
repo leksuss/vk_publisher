@@ -28,24 +28,24 @@ pip3 install -r requirements.txt
 
 ## How to setup
 
-To make this tool working you need `access_token` and `group_id` setted in `.env` file. Yoo can use `.env_example` as a template. 
+To make this tool working you need `access_token` and `group_id` set in `.env` file. You can use `.env_example` as a template. 
 
 #### Receiving group_id
 
-`group_id` you can find in any photo url pusblished in your group. For example, in this url `group_id` is `123456789`:
+`group_id` you can find in any photo URL published in your group. For example, in this URL `group_id` is `123456789`:
 ```
 https://vk.com/mycoolgroup?z=photo-123456789_987654321%2Falbum-123456789_00
 ```
 
 #### Receiving access_token
 
-    1. [Login to VK](https://vk.com/login) if not logged yet.
-    2. [Create VK app](https://vk.com/editapp?act=create), select `standalone app`. Find app ID in settings, it looks like 8-digit number.
-    3. Based on [this instruction](https://dev.vk.com/api/access-token/implicit-flow-user) generate auth url and follow by it. `client_id` is an app ID from step 2. Here is example of this url:
-    ```
-    https://oauth.vk.com/authorize?client_id=<YOUR_CLIENT_ID>&redirect_uri=https://oauth.vk.com/blank.html&response_type=token&scope=offline,photos,manage,wall&v=5.131
-    ```
-    4. Copy `access_token` from params in redirected url and past it to `.env` file.
+1. [Login to VK](https://vk.com/login) if not logged yet.
+2. [Create VK app](https://vk.com/editapp?act=create), select `standalone app`. Find app ID in settings, it looks like 8-digit number.
+3. Based on [this instruction](https://dev.vk.com/api/access-token/implicit-flow-user) generate auth URL and follow by it. `client_id` is an app ID from step 2. Here is example of this URL:
+```
+https://oauth.vk.com/authorize?client_id=<YOUR_CLIENT_ID>&redirect_uri=https://oauth.vk.com/blank.html&response_type=token&scope=offline,photos,manage,wall&v=5.131
+```
+4. Agree with asked permission list, copy `access_token` from params in redirected URL and past it to `.env` file.
 
 
 ## How to use
@@ -54,4 +54,4 @@ Run script without arguments:
 ```
 python3 main.py
 ```
-One run - one published comics with description.
+One run - one published comics with description in your VK group!
