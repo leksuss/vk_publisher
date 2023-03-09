@@ -16,7 +16,7 @@ def fetch_vk_upload_server_url(group_id, api_key):
     response = requests.post(url, data=params)
     response.raise_for_status()
 
-    return response.json()['response']
+    return response.json()['response']['upload_url']
 
 
 def upload_img_to_vk_server(upload_url, filepath, api_key):
@@ -25,8 +25,8 @@ def upload_img_to_vk_server(upload_url, filepath, api_key):
         files = {
             'photo': file,
         }
-    response = requests.post(upload_url, files=files)
-    response.raise_for_status()
+        response = requests.post(upload_url, files=files)
+        response.raise_for_status()
 
     return response.json()
 
@@ -69,10 +69,10 @@ def posting_img_to_vk_wall(group_id, owner_id, media_id, message, api_key):
 
 def publish_post(group_id, img_text, img_filepath, api_key):
 
-    server_info = fetch_vk_upload_server_url(group_id, api_key)
+    vk_upload_server_url = fetch_vk_upload_server_url(group_id, api_key)
 
     upload_response = upload_img_to_vk_server(
-        server_info['upload_url'],
+        vk_upload_server_url,
         img_filepath,
         api_key,
     )
