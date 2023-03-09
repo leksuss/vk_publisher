@@ -4,6 +4,16 @@ import requests
 VK_API_VERSION = 5.131
 
 
+def catch_vk_errors(response):
+
+    if 'error' in response:
+        error_msg = '\nerror_code: {}\nerror_message: {}'.format(
+            response['error']['error_code'],
+            response['error']['error_msg'],
+        )
+        raise requests.HTTPError(error_msg)
+
+
 def fetch_vk_upload_server_url(group_id, api_key):
 
     url = 'https://api.vk.com/method/photos.getWallUploadServer'
@@ -14,7 +24,11 @@ def fetch_vk_upload_server_url(group_id, api_key):
         'v': VK_API_VERSION,
     }
     response = requests.post(url, data=params)
-    response.raise_for_status()
+    try:
+        response.raise_for_status()
+        catch_vk_errors(response.json())
+    except requests.HTTPError:
+        raise
 
     return response.json()['response']['upload_url']
 
@@ -26,7 +40,12 @@ def upload_img_to_vk_server(upload_url, filepath):
             'photo': file,
         }
         response = requests.post(upload_url, files=files)
+
+    try:
         response.raise_for_status()
+        catch_vk_errors(response.json())
+    except requests.HTTPError:
+        raise
 
     return response.json()
 
@@ -44,7 +63,11 @@ def save_img_to_vk_server(group_id, photo, server, hash, api_key):
         'v': VK_API_VERSION,
     }
     response = requests.post(url, data=params)
-    response.raise_for_status()
+    try:
+        response.raise_for_status()
+        catch_vk_errors(response.json())
+    except requests.HTTPError:
+        raise
 
     return response.json()['response']
 
@@ -62,7 +85,11 @@ def post_img_to_vk_wall(group_id, owner_id, media_id, message, api_key):
         'v': VK_API_VERSION,
     }
     response = requests.post(url, data=params)
-    response.raise_for_status()
+    try:
+        response.raise_for_status()
+        catch_vk_errors(response.json())
+    except requests.HTTPError:
+        raise
 
     return response.json()
 
