@@ -56,7 +56,7 @@ def post_img_to_vk_wall(group_id, owner_id, media_id, message, api_key):
     params = {
         'owner_id': f'-{group_id}',
         'message': message,
-        'attachments': f'photo1653853_{media_id}',
+        'attachments': f'photo{owner_id}_{media_id}',
         'from_group': 1,
         'access_token': api_key,
         'v': VK_API_VERSION,
