@@ -24,13 +24,12 @@ def fetch_vk_upload_server_url(group_id, api_key):
         'v': VK_API_VERSION,
     }
     response = requests.post(url, data=params)
-    try:
-        response.raise_for_status()
-        catch_vk_errors(response.json())
-    except requests.HTTPError:
-        raise
+    parsed_response = response.json()
 
-    return response.json()['response']['upload_url']
+    response.raise_for_status()
+    catch_vk_errors(parsed_response)
+
+    return parsed_response['response']['upload_url']
 
 
 def upload_img_to_vk_server(upload_url, filepath):
@@ -41,16 +40,15 @@ def upload_img_to_vk_server(upload_url, filepath):
         }
         response = requests.post(upload_url, files=files)
 
-    try:
-        response.raise_for_status()
-        catch_vk_errors(response.json())
-    except requests.HTTPError:
-        raise
+    parsed_response = response.json()
 
-    return response.json()
+    response.raise_for_status()
+    catch_vk_errors(response.json())
+
+    return parsed_response
 
 
-def save_img_to_vk_server(group_id, photo, server, hash, api_key):
+def save_img_to_vk_server(group_id, photo, server, img_hash, api_key):
 
     url = 'https://api.vk.com/method/photos.saveWallPhoto'
 
@@ -58,18 +56,17 @@ def save_img_to_vk_server(group_id, photo, server, hash, api_key):
         'group_id': group_id,
         'photo': photo,
         'server': server,
-        'hash': hash,
+        'hash': img_hash,
         'access_token': api_key,
         'v': VK_API_VERSION,
     }
     response = requests.post(url, data=params)
-    try:
-        response.raise_for_status()
-        catch_vk_errors(response.json())
-    except requests.HTTPError:
-        raise
+    parsed_response = response.json()
 
-    return response.json()['response']
+    response.raise_for_status()
+    catch_vk_errors(parsed_response)
+
+    return parsed_response['response']
 
 
 def post_img_to_vk_wall(group_id, owner_id, media_id, message, api_key):
@@ -85,13 +82,12 @@ def post_img_to_vk_wall(group_id, owner_id, media_id, message, api_key):
         'v': VK_API_VERSION,
     }
     response = requests.post(url, data=params)
-    try:
-        response.raise_for_status()
-        catch_vk_errors(response.json())
-    except requests.HTTPError:
-        raise
+    parsed_response = response.json()
 
-    return response.json()
+    response.raise_for_status()
+    catch_vk_errors(parsed_response)
+
+    return parsed_response
 
 
 def publish_post(group_id, img_text, img_filepath, api_key):
